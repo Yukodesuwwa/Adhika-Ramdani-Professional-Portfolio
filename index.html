@@ -215,19 +215,74 @@
             box-shadow: 12px 12px 0px var(--shadow-hover);
         }
 
+        /* NDA / Confidential Image Box */
         .project-image {
             width: 100%;
-            height: 200px;
-            border: 2px dashed #666;
+            height: 200px; /* Ukuran asli dipertahankan */
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
-            background-color: rgba(128,128,128,0.1);
-            font-style: italic;
-            color: #888;
+            background-color: var(--paper-color);
+            border: 3px solid var(--highlight-color);
+            overflow: hidden;
+        }
+
+        /* Efek pita 'Police Line' di atas dan bawah gambar */
+        .project-image::before, .project-image::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--highlight-color),
+                var(--highlight-color) 15px,
+                var(--paper-color) 15px,
+                var(--paper-color) 30px
+            );
+            z-index: 1;
+        }
+        
+        .project-image::before { 
+            top: 0; 
+            border-bottom: 3px solid var(--highlight-color); 
+        }
+        
+        .project-image::after { 
+            bottom: 0; 
+            border-top: 3px solid var(--highlight-color); 
+        }
+
+        /* Efek titik-titik (noise) seakan dokumen disensor */
+        .image-noise {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--text-color) 1px, transparent 1px);
+            background-size: 8px 8px;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        /* Stempel Raksasa di tengah gambar */
+        .redacted-stamp {
+            font-size: clamp(1.2em, 4vw, 1.8em);
+            font-weight: 900;
+            color: var(--highlight-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 4px solid var(--highlight-color);
+            padding: 10px 15px;
+            transform: rotate(-5deg);
+            background-color: var(--paper-color);
+            z-index: 2;
+            box-shadow: 4px 4px 0px var(--shadow-color);
             text-align: center;
-            padding: 20px;
         }
 
         .project-title {
@@ -236,6 +291,7 @@
             margin-bottom: 10px;
             line-height: 1.2;
             text-transform: uppercase;
+            margin-top: 10px;
         }
 
         .project-desc {
@@ -251,25 +307,7 @@
             margin-top: auto;
         }
 
-        .btn {
-            border: 2px solid var(--highlight-color);
-            padding: 8px 15px;
-            text-decoration: none;
-            color: var(--highlight-color);
-            font-weight: bold;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            background: transparent;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: var(--highlight-color);
-            color: var(--paper-color);
-        }
-
-        /* Confidential / NDA Tag */
+        /* Confidential / NDA Tag Kecil (Pengganti Tombol) */
         .confidential-tag {
             border: 2px dashed #888;
             padding: 8px 15px;
@@ -373,7 +411,7 @@
             content: '■'; 
             position: absolute;
             left: 0;
-            top: 0.25em; /* Mengatur tinggi agar presisi di tengah teks baris pertama */
+            top: 0.25em; 
             font-size: 0.7em; 
             color: var(--highlight-color);
         }
@@ -486,12 +524,12 @@
         <!-- Header / Hero Section -->
         <div id="about" class="header">
             <h1>Adhika Ramdani</h1>
-            <div class="subtitle" data-i18n="hero_subtitle">Software Engineer & Data Ingestion Spec.</div>
+            <div class="subtitle" data-i18n="hero_subtitle">Software Engineer & Data Specialist</div>
             <p class="intro-text" data-i18n="hero_intro">
-                Educational Technology student at Universitas Pendidikan Indonesia with a strong background in Software Engineering. I specialize in backend development, data engineering, and creating large-scale social media scraping pipelines. I enjoy solving complex API structures and turning messy data into structured insights.
+                Hello. I am an Educational Technology student at Universitas Pendidikan Indonesia with a solid foundation in Software Engineering. My expertise lies in backend development and data engineering—specifically in building robust, large-scale social media scraping pipelines. I enjoy the challenge of decoding complex API structures and transforming raw data into structured, actionable insights.
             </p>
             <div style="margin-top: 20px;">
-                <a href="#projects" class="btn" style="padding: 12px 25px; font-size: 1.1em;" data-i18n="hero_btn">View My Work ↓</a>
+                <a href="#projects" class="control-btn" style="padding: 12px 25px; font-size: 1.1em; display: inline-block; text-decoration: none;" data-i18n="hero_btn">View Selected Works ↓</a>
             </div>
         </div>
 
@@ -501,55 +539,58 @@
             
             <!-- Project 1 -->
             <div class="project-card">
-                <div class="project-image" data-i18n="img_placeholder_1">
-                    
+                <div class="project-image">
+                    <div class="image-noise"></div>
+                    <div class="redacted-stamp" data-i18n="stamp_nda">Data unavailable</div>
                 </div>
                 <h3 class="project-title" data-i18n="p1_title">Mass Social Media Data Scraper</h3>
                 <p class="project-desc" data-i18n="p1_desc">
-                    Developed a robust pipeline to extract large-scale data from X (Twitter), Threads, and YouTube. Implemented rate-limit handling and account rotation to bypass blocks and collect high-volume structured data for analytics.
+                    Engineered a resilient data pipeline to extract large-scale information from platforms like X (Twitter), Threads, and YouTube. By carefully managing rate limits and account rotations, this system consistently delivers high-volume, structured data for deep analytics.
                 </p>
                 <div class="skills-container" style="margin-bottom: 20px;">
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">Python</span>
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">Apify</span>
                 </div>
                 <div class="project-links">
-                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Confidential / NDA</span>
+                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Access Restricted</span>
                 </div>
             </div>
 
             <!-- Project 2 -->
             <div class="project-card">
-                <div class="project-image" data-i18n="img_placeholder_2">
-                    
+                <div class="project-image">
+                    <div class="image-noise"></div>
+                    <div class="redacted-stamp" data-i18n="stamp_nda">Data unavailable</div>
                 </div>
                 <h3 class="project-title" data-i18n="p2_title">IG Mobile API Reverse Engineering</h3>
                 <p class="project-desc" data-i18n="p2_desc">
-                    Successfully bypassed SSL pinning to reverse engineer the Instagram Mobile API. This allowed for highly scalable, stealthy account and keyword-based data collection directly from mobile endpoints.
+                    Successfully navigated SSL pinning to reverse-engineer the Instagram Mobile API. This approach enabled the creation of a highly scalable and reliable method for collecting targeted account and keyword data directly from mobile endpoints.
                 </p>
                 <div class="skills-container" style="margin-bottom: 20px;">
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">Python</span>
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">API Security</span>
                 </div>
                 <div class="project-links">
-                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Confidential / NDA</span>
+                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Access Restricted</span>
                 </div>
             </div>
 
             <!-- Project 3 -->
             <div class="project-card">
-                <div class="project-image" data-i18n="img_placeholder_3">
-                    
+                <div class="project-image">
+                    <div class="image-noise"></div>
+                    <div class="redacted-stamp" data-i18n="stamp_nda">Data unavailable</div>
                 </div>
                 <h3 class="project-title" data-i18n="p3_title">Si Iteung Payroll System Module</h3>
                 <p class="project-desc" data-i18n="p3_desc">
-                    Built and integrated internal application modules for "Si Iteung", focusing on Salary and Allowance History features. Utilized Python scripting for internal data processing to eliminate manual administrative work.
+                    Developed and integrated key internal modules for the 'Si Iteung' payroll application, focusing on Salary and Allowance tracking. To streamline operations, I also created Python scripts that automated hours of manual data processing for the administrative team.
                 </p>
                 <div class="skills-container" style="margin-bottom: 20px;">
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">PHP / Laravel</span>
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">MySQL</span>
                 </div>
                 <div class="project-links">
-                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Confidential / NDA</span>
+                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Access Restricted</span>
                 </div>
             </div>
 
@@ -573,26 +614,26 @@
         
         <div class="timeline-item">
             <div class="timeline-header">
-                <span class="timeline-title" data-i18n="exp1_role">Data Ingestion (Programmer Scrapper)</span>
+                <span class="timeline-title" data-i18n="exp1_role">Data Ingestion (Programmer)</span>
                 <span class="timeline-date" data-i18n="exp1_date">2025 - Present</span>
             </div>
             <div class="timeline-subtitle">PT Kurasi Media | Jakarta, Indonesia</div>
             <ul>
-                <li data-i18n="exp1_task1">Engineered large-scale social media scraping pipelines (Instagram, X, Threads, YouTube).</li>
-                <li data-i18n="exp1_task2">Implemented SSL pinning bypass for mobile API data extraction.</li>
-                <li data-i18n="exp1_task3">Optimized multi-source scrapers using Apify and Nitter with advanced account rotation.</li>
+                <li data-i18n="exp1_task1">Designed and maintained reliable scraping pipelines for major social media platforms.</li>
+                <li data-i18n="exp1_task2">Navigated mobile APIs securely to extract data efficiently.</li>
+                <li data-i18n="exp1_task3">Optimized data collection tools (like Apify and Nitter) to handle heavy loads seamlessly.</li>
             </ul>
         </div>
 
         <div class="timeline-item">
             <div class="timeline-header">
-                <span class="timeline-title" data-i18n="exp2_role">Programmer (PKL & Magang)</span>
+                <span class="timeline-title" data-i18n="exp2_role">Programmer (Intern)</span>
                 <span class="timeline-date">2023 - 2024</span>
             </div>
             <div class="timeline-subtitle">CV Kabayan Group | Bandung, Indonesia</div>
             <ul>
-                <li data-i18n="exp2_task1">Developed modules for the Si Iteung application (Salary and Allowance tracking).</li>
-                <li data-i18n="exp2_task2">Automated data filtering processes using Python scripts.</li>
+                <li data-i18n="exp2_task1">Developed tracking modules for the company's internal payroll system.</li>
+                <li data-i18n="exp2_task2">Automated daily data filtering processes using Python scripts, significantly reducing manual workload.</li>
             </ul>
         </div>
 
@@ -605,7 +646,7 @@
                 <span class="timeline-date" data-i18n="edu1_date">2024 - Present</span>
             </div>
             <div class="timeline-subtitle" data-i18n="edu1_major">Educational Technology | Bandung, Indonesia</div>
-            <p style="font-size: 1.05em; line-height: 1.5;" data-i18n="edu1_desc">Merging educational concepts with technological advancements to design systems and media that enhance learning.</p>
+            <p style="font-size: 1.05em; line-height: 1.5;" data-i18n="edu1_desc">Focusing on the intersection of educational theories and modern technology to create systems that enhance the learning experience.</p>
         </div>
         
         <div class="timeline-item">
@@ -614,7 +655,7 @@
                 <span class="timeline-date">2021 - 2024</span>
             </div>
             <div class="timeline-subtitle" data-i18n="edu2_major">Software Engineering (RPL) | Katapang, Indonesia</div>
-            <p style="font-size: 1.05em; line-height: 1.5;" data-i18n="edu2_desc">Built a strong fundamental base in programming, algorithms, and software development lifecycles.</p>
+            <p style="font-size: 1.05em; line-height: 1.5;" data-i18n="edu2_desc">Built a strong technical foundation in programming, algorithms, and the software development lifecycle.</p>
         </div>
 
     </div>
@@ -622,7 +663,7 @@
     <!-- Footer / Contact Section -->
     <footer id="contact" class="site-footer">
         <div class="contact-large" data-i18n="footer_title">Let's Work Together</div>
-        <p style="margin-bottom: 20px; font-size: 1.1em;" data-i18n="footer_desc">Currently open for freelance opportunities and collaborations.</p>
+        <p style="margin-bottom: 20px; font-size: 1.1em;" data-i18n="footer_desc">I am currently open to new freelance opportunities and collaborative projects. Let's connect!</p>
         
         <div class="footer-links">
             <a href="mailto:adhikaramdanil5@gmail.com">✉️ adhikaramdanil5@gmail.com</a>
@@ -644,71 +685,67 @@
         const translations = {
             en: {
                 nav_about: "About", nav_projects: "Projects", nav_experience: "Experience", nav_contact: "Contact",
-                hero_subtitle: "Software Engineer & Data Ingestion Spec.",
-                hero_intro: "Educational Technology student at Universitas Pendidikan Indonesia with a strong background in Software Engineering. I specialize in backend development, data engineering, and creating large-scale social media scraping pipelines. I enjoy solving complex API structures and turning messy data into structured insights.",
-                hero_btn: "View My Work ↓",
+                hero_subtitle: "Software Engineer & Data Specialist",
+                hero_intro: "Hello. I am an Educational Technology student at Universitas Pendidikan Indonesia with a solid foundation in Software Engineering. My expertise lies in backend development and data engineering—specifically in building robust, large-scale social media scraping pipelines. I enjoy the challenge of decoding complex API structures and transforming raw data into structured, actionable insights.",
+                hero_btn: "View Selected Works ↓",
                 projects_title: "Featured Projects",
-                img_placeholder_1: "",
-                img_placeholder_2: "",
-                img_placeholder_3: "",
+                stamp_nda: "Data unavailable",
                 p1_title: "Mass Social Media Data Scraper",
-                p1_desc: "Developed a robust pipeline to extract large-scale data from X (Twitter), Threads, and YouTube. Implemented rate-limit handling and account rotation to bypass blocks and collect high-volume structured data for analytics.",
+                p1_desc: "Engineered a resilient data pipeline to extract large-scale information from platforms like X (Twitter), Threads, and YouTube. By carefully managing rate limits and account rotations, this system consistently delivers high-volume, structured data for deep analytics.",
                 p2_title: "IG Mobile API Reverse Engineering",
-                p2_desc: "Successfully bypassed SSL pinning to reverse engineer the Instagram Mobile API. This allowed for highly scalable, stealthy account and keyword-based data collection directly from mobile endpoints.",
+                p2_desc: "Successfully navigated SSL pinning to reverse-engineer the Instagram Mobile API. This approach enabled the creation of a highly scalable and reliable method for collecting targeted account and keyword data directly from mobile endpoints.",
                 p3_title: "Si Iteung Payroll System Module",
-                p3_desc: "Built and integrated internal application modules for \"Si Iteung\", focusing on Salary and Allowance History features. Utilized Python scripting for internal data processing to eliminate manual administrative work.",
-                confidential_warning: "🔒 Confidential / NDA",
+                p3_desc: "Developed and integrated key internal modules for the 'Si Iteung' payroll application, focusing on Salary and Allowance tracking. To streamline operations, I also created Python scripts that automated hours of manual data processing for the administrative team.",
+                confidential_warning: "🔒 Access Restricted",
                 skills_title: "Tech Stack", skill_scraping: "Data Scraping",
                 exp_title: "Experience",
-                exp1_role: "Data Ingestion (Programmer Scrapper)", exp1_date: "2025 - Present",
-                exp1_task1: "Engineered large-scale social media scraping pipelines (Instagram, X, Threads, YouTube).",
-                exp1_task2: "Implemented SSL pinning bypass for mobile API data extraction.",
-                exp1_task3: "Optimized multi-source scrapers using Apify and Nitter with advanced account rotation.",
+                exp1_role: "Data Ingestion (Programmer)", exp1_date: "2025 - Present",
+                exp1_task1: "Designed and maintained reliable scraping pipelines for major social media platforms.",
+                exp1_task2: "Navigated mobile APIs securely to extract data efficiently.",
+                exp1_task3: "Optimized data collection tools (like Apify and Nitter) to handle heavy loads seamlessly.",
                 exp2_role: "Programmer (Intern)",
-                exp2_task1: "Developed modules for the Si Iteung application (Salary and Allowance tracking).",
-                exp2_task2: "Automated data filtering processes using Python scripts.",
+                exp2_task1: "Developed tracking modules for the company's internal payroll system.",
+                exp2_task2: "Automated daily data filtering processes using Python scripts, significantly reducing manual workload.",
                 edu_title: "Education",
                 edu1_date: "2024 - Present", edu1_major: "Educational Technology | Bandung, Indonesia",
-                edu1_desc: "Merging educational concepts with technological advancements to design systems and media that enhance learning.",
+                edu1_desc: "Focusing on the intersection of educational theories and modern technology to create systems that enhance the learning experience.",
                 edu2_major: "Software Engineering (RPL) | Katapang, Indonesia",
-                edu2_desc: "Built a strong fundamental base in programming, algorithms, and software development lifecycles.",
+                edu2_desc: "Built a strong technical foundation in programming, algorithms, and the software development lifecycle.",
                 footer_title: "Let's Work Together",
-                footer_desc: "Currently open for freelance opportunities and collaborations.",
+                footer_desc: "I am currently open to new freelance opportunities and collaborative projects. Let's connect!",
                 footer_copyright: "© 2026 Adhika Ramdani. Handcrafted with Code."
             },
             id: {
                 nav_about: "Tentang", nav_projects: "Proyek", nav_experience: "Pengalaman", nav_contact: "Kontak",
-                hero_subtitle: "Software Engineer & Data Ingestion Spec.",
-                hero_intro: "Mahasiswa Teknologi Pendidikan di Universitas Pendidikan Indonesia dengan latar belakang kuat di bidang Rekayasa Perangkat Lunak. Saya memiliki spesialisasi dalam pengembangan backend, data engineering, dan pembuatan pipeline scraping media sosial skala besar. Saya menikmati memecahkan struktur API kompleks dan mengubah data acak menjadi wawasan terstruktur.",
-                hero_btn: "Lihat Karya Saya ↓",
+                hero_subtitle: "Software Engineer & Data Enthusiast",
+                hero_intro: "Halo! Saya mahasiswa Teknologi Pendidikan di UPI yang punya background kuat di Software Engineering. Saya fokus di backend development dan data engineering, terutama bikin pipeline scraping sosmed skala besar. Saya suka banget ngulik struktur API yang rumit dan ngubah data mentah jadi insight yang rapi dan siap pakai.",
+                hero_btn: "Lihat Proyek Saya ↓",
                 projects_title: "Proyek Pilihan",
-                img_placeholder_1: "[Gambar Diagram Skema Scraping Pipa Data Media Sosial]",
-                img_placeholder_2: "[Gambar Sketsa Kode Reverse Engineering API Mobile]",
-                img_placeholder_3: "[Gambar Tampilan UI Modul Penggajian Si Iteung]",
+                stamp_nda: "🔒 DILINDUNGI NDA",
                 p1_title: "Scraper Data Media Sosial Massal",
-                p1_desc: "Mengembangkan pipeline tangguh untuk mengekstrak data berskala besar dari X (Twitter), Threads, dan YouTube. Menerapkan penanganan batas permintaan (rate-limit) dan rotasi akun untuk menembus pemblokiran serta mengumpulkan data terstruktur bervolume tinggi untuk analitik.",
+                p1_desc: "Di proyek ini, saya bikin pipeline data yang tangguh buat nge-scrape data skala besar dari X (Twitter), Threads, dan YouTube. Dengan ngatur rate-limit dan rotasi akun yang pas, sistem ini bisa jalan mulus buat ngumpulin data terstruktur untuk kebutuhan analitik tim.",
                 p2_title: "Reverse Engineering API Mobile Instagram",
-                p2_desc: "Berhasil menembus SSL pinning untuk membedah API Mobile Instagram. Memungkinkan pengumpulan data berbasis akun dan kata kunci yang sangat skalabel dan aman dari deteksi langsung melalui endpoint aplikasi mobile.",
+                p2_desc: "Saya berhasil ngelewatin proteksi SSL pinning buat nge-reverse engineer API Mobile Instagram. Dari sini, saya bisa bikin metode scraping berbasis akun dan keyword yang aman, stabil, dan bisa jalan di skala besar langsung dari endpoint mobile.",
                 p3_title: "Modul Sistem Penggajian Si Iteung",
-                p3_desc: "Membangun dan mengintegrasikan modul aplikasi internal untuk \"Si Iteung\", dengan fokus pada fitur Riwayat Gaji dan Tunjangan. Memanfaatkan skrip Python untuk pemrosesan data internal demi memangkas beban kerja administrasi manual.",
-                confidential_warning: "🔒 Bersifat Rahasia / NDA",
-                skills_title: "Teknologi", skill_scraping: "Scraping Data",
-                exp_title: "Pengalaman Kerja",
-                exp1_role: "Data Ingestion (Programmer Scrapper)", exp1_date: "2025 - Sekarang",
-                exp1_task1: "Merekayasa pipeline scraping media sosial skala besar (Instagram, X, Threads, YouTube).",
-                exp1_task2: "Mengimplementasikan bypass SSL pinning untuk ekstraksi data API mobile.",
-                exp1_task3: "Mengoptimalkan scraper multi-sumber menggunakan Apify dan Nitter dengan rotasi akun tingkat lanjut.",
-                exp2_role: "Programmer (PKL & Magang)",
-                exp2_task1: "Mengembangkan modul untuk aplikasi Si Iteung (pelacakan Gaji dan Tunjangan).",
-                exp2_task2: "Mengotomatiskan proses penyaringan data menggunakan skrip Python.",
+                p3_desc: "Saya ikut ngembangin modul penting buat aplikasi internal 'Si Iteung', khususnya untuk fitur histori gaji dan tunjangan. Biar kerjaan tim admin lebih ringan, saya juga bikin script Python buat otomatisasi proses pendataan harian mereka.",
+                confidential_warning: "🔒 Akses Dibatasi (Rahasia)",
+                skills_title: "Teknologi", skill_scraping: "Data Scraping",
+                exp_title: "Pengalaman",
+                exp1_role: "Data Ingestion (Programmer)", exp1_date: "2025 - Sekarang",
+                exp1_task1: "Bikin dan nge-maintain pipeline scraping yang andal buat berbagai platform sosmed besar.",
+                exp1_task2: "Nge-bypass keamanan API mobile buat ekstrak data dengan lebih efisien.",
+                exp1_task3: "Optimasi tools scraper (kayak Apify dan Nitter) biar tetap stabil walau nanganin load data yang gede.",
+                exp2_role: "Programmer (Intern)",
+                exp2_task1: "Ikut ngembangin modul tracking gaji dan tunjangan di sistem internal perusahaan.",
+                exp2_task2: "Bikin script Python buat otomatisasi filtering data harian, lumayan banget buat hemat waktu kerja tim admin.",
                 edu_title: "Pendidikan",
                 edu1_date: "2024 - Sekarang", edu1_major: "Teknologi Pendidikan | Bandung, Indonesia",
-                edu1_desc: "Menggabungkan konsep kependidikan dengan perkembangan teknologi terkini untuk merancang sistem dan media yang meningkatkan proses pembelajaran.",
+                edu1_desc: "Fokus belajar gimana caranya ngegabungin konsep pendidikan sama teknologi kekinian, biar bisa bikin sistem yang ngebantu proses belajar jadi lebih asyik dan efektif.",
                 edu2_major: "Rekayasa Perangkat Lunak (RPL) | Katapang, Indonesia",
-                edu2_desc: "Membangun landasan fundamental yang kuat dalam pemrograman, algoritma, dan siklus hidup pengembangan perangkat lunak.",
-                footer_title: "Mari Bekerja Sama",
-                footer_desc: "Saat ini terbuka untuk peluang freelance dan kolaborasi proyek.",
-                footer_copyright: "© 2026 Adhika Ramdani. Dibuat manual dengan Kode."
+                edu2_desc: "Di sinilah fondasi coding saya kebentuk. Banyak belajar soal dasar pemrograman, algoritma, dan gimana sebuah software dibangun dari nol.",
+                footer_title: "Mari Berkolaborasi",
+                footer_desc: "Saat ini saya lagi open buat proyek freelance atau peluang kolaborasi baru. Feel free buat reach out, ya!",
+                footer_copyright: "© 2026 Adhika Ramdani. Handcrafted with Code."
             }
         };
 
