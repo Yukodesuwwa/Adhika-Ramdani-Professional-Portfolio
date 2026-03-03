@@ -12,6 +12,20 @@
             --highlight-color: #000;
             --line-color: #d8d8d8;
             --line-height: 32px; 
+            --shadow-color: rgba(0, 0, 0, 0.8);
+            --shadow-hover: rgba(0, 0, 0, 1);
+            --timeline-bg: #eee;
+        }
+
+        /* Dark Mode Theme Variables */
+        [data-theme="dark"] {
+            --paper-color: #121212;
+            --text-color: #e0e0e0;
+            --highlight-color: #ffffff;
+            --line-color: #333333;
+            --shadow-color: rgba(255, 255, 255, 0.7);
+            --shadow-hover: rgba(255, 255, 255, 1);
+            --timeline-bg: #2a2a2a;
         }
 
         * {
@@ -37,6 +51,7 @@
             line-height: var(--line-height);
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Navigation Bar */
@@ -51,6 +66,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: background-color 0.3s ease;
         }
 
         .nav-brand {
@@ -60,6 +76,12 @@
             letter-spacing: 2px;
             text-decoration: none;
             color: var(--highlight-color);
+        }
+
+        .nav-menu-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 40px;
         }
 
         .nav-links {
@@ -79,6 +101,34 @@
             text-decoration: underline;
             text-decoration-thickness: 3px;
             text-underline-offset: 4px;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border-left: 2px solid var(--highlight-color);
+            padding-left: 20px;
+        }
+
+        .control-btn {
+            background: transparent;
+            border: 2px solid var(--highlight-color);
+            color: var(--highlight-color);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            padding: 4px 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            box-shadow: 2px 2px 0px var(--shadow-color);
+        }
+
+        .control-btn:hover {
+            background-color: var(--highlight-color);
+            color: var(--paper-color);
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--shadow-color);
         }
 
         /* Main Container */
@@ -102,21 +152,22 @@
             text-transform: uppercase;
             letter-spacing: 4px;
             font-weight: 900;
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.15); 
+            text-shadow: 4px 4px 0px rgba(128,128,128,0.2); 
             line-height: 1.2;
             margin-bottom: 10px;
+            color: var(--text-color);
         }
 
         .subtitle {
             font-size: clamp(1.2em, 2vw, 1.8em);
             font-weight: bold;
             margin-bottom: 30px;
-            color: #444;
             display: inline-block;
             background-color: var(--highlight-color);
-            color: #fff;
+            color: var(--paper-color);
             padding: 5px 15px;
             text-transform: uppercase;
+            transition: all 0.3s ease;
         }
 
         .intro-text {
@@ -156,12 +207,12 @@
             display: flex;
             flex-direction: column;
             transition: all 0.3s ease;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.8); /* Brutalist/Sketch hard shadow */
+            box-shadow: 8px 8px 0px var(--shadow-color); /* Brutalist/Sketch hard shadow */
         }
 
         .project-card:hover {
             transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px rgba(0,0,0,1);
+            box-shadow: 12px 12px 0px var(--shadow-hover);
         }
 
         .project-image {
@@ -172,9 +223,9 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
-            background-color: rgba(0,0,0,0.02);
+            background-color: rgba(128,128,128,0.1);
             font-style: italic;
-            color: #666;
+            color: #888;
             text-align: center;
             padding: 20px;
         }
@@ -215,7 +266,26 @@
 
         .btn:hover {
             background-color: var(--highlight-color);
-            color: #fff;
+            color: var(--paper-color);
+        }
+
+        /* Confidential / NDA Tag */
+        .confidential-tag {
+            border: 2px dashed #888;
+            padding: 8px 15px;
+            color: #666;
+            font-weight: bold;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            background: rgba(128, 128, 128, 0.1);
+            cursor: not-allowed;
+            display: inline-block;
+        }
+
+        [data-theme="dark"] .confidential-tag {
+            border-color: #555;
+            color: #aaa;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         /* Skills Section */
@@ -231,15 +301,15 @@
             font-size: 1.1em;
             font-weight: bold;
             background-color: transparent;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+            box-shadow: 4px 4px 0px var(--shadow-color);
             transition: all 0.2s ease;
         }
         
         .skill-tag:hover {
             background-color: var(--highlight-color);
-            color: #fff;
+            color: var(--paper-color);
             transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+            box-shadow: 6px 6px 0px var(--shadow-hover);
         }
 
         /* Experience & Education Lists */
@@ -248,18 +318,6 @@
             padding-left: 20px;
             border-left: 4px solid var(--highlight-color);
             position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -12px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            background-color: var(--paper-color);
-            border: 4px solid var(--highlight-color);
-            border-radius: 50%;
         }
 
         .timeline-header {
@@ -273,33 +331,51 @@
         .timeline-title {
             font-weight: bold;
             font-size: 1.3em;
-            color: var(--highlight-color);
+            color: var(--text-color);
+            text-transform: uppercase;
         }
 
         .timeline-date {
             font-weight: bold;
-            color: #555;
-            background-color: #eee;
+            color: var(--text-color);
+            background-color: var(--timeline-bg);
             padding: 2px 8px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--highlight-color);
         }
 
         .timeline-subtitle {
             font-size: 1.1em;
             font-weight: bold;
-            color: #444;
+            color: #777;
             margin-bottom: 10px;
         }
 
+        [data-theme="dark"] .timeline-subtitle {
+            color: #aaa;
+        }
+
         .timeline-item ul {
-            list-style-type: square;
-            padding-left: 20px;
-            margin-top: 10px;
+            list-style-type: none; /* Menghilangkan bullet bawaan */
+            padding-left: 0;
+            margin-top: 12px;
         }
 
         .timeline-item li {
             font-size: 1.05em;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 24px; /* Memberi ruang untuk custom bullet */
+            line-height: 1.5;
+        }
+
+        /* Membuat custom bullet kotak presisi */
+        .timeline-item li::before {
+            content: '■'; 
+            position: absolute;
+            left: 0;
+            top: 0.25em; /* Mengatur tinggi agar presisi di tengah teks baris pertama */
+            font-size: 0.7em; 
+            color: var(--highlight-color);
         }
 
         /* Footer Section */
@@ -338,12 +414,12 @@
 
         .footer-links a:hover {
             border: 2px solid var(--highlight-color);
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+            box-shadow: 4px 4px 0px var(--shadow-color);
         }
 
         .copyright {
             font-size: 0.9em;
-            color: #666;
+            color: #888;
             margin-top: 20px;
             font-weight: bold;
         }
@@ -354,6 +430,19 @@
                 flex-direction: column;
                 gap: 15px;
                 padding: 15px 20px;
+            }
+            .nav-menu-wrapper {
+                flex-direction: column-reverse;
+                gap: 20px;
+                width: 100%;
+            }
+            .nav-controls {
+                border-left: none;
+                border-bottom: 2px solid var(--highlight-color);
+                padding-left: 0;
+                padding-bottom: 15px;
+                width: 100%;
+                justify-content: center;
             }
             .nav-links {
                 flex-wrap: wrap;
@@ -378,11 +467,17 @@
     <!-- Navigation -->
     <nav>
         <a href="#" class="nav-brand">AR.Portfolio</a>
-        <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#experience">Experience</a>
-            <a href="#contact">Contact</a>
+        <div class="nav-menu-wrapper">
+            <div class="nav-links">
+                <a href="#about" data-i18n="nav_about">About</a>
+                <a href="#projects" data-i18n="nav_projects">Projects</a>
+                <a href="#experience" data-i18n="nav_experience">Experience</a>
+                <a href="#contact" data-i18n="nav_contact">Contact</a>
+            </div>
+            <div class="nav-controls">
+                <button id="lang-toggle" class="control-btn" title="Toggle Language">ID / EN</button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Theme">🌙</button>
+            </div>
         </div>
     </nav>
 
@@ -391,69 +486,77 @@
         <!-- Header / Hero Section -->
         <div id="about" class="header">
             <h1>Adhika Ramdani</h1>
-            <div class="subtitle">Software Engineer & Data Ingestion Spec.</div>
-            <p class="intro-text">
+            <div class="subtitle" data-i18n="hero_subtitle">Software Engineer & Data Ingestion Spec.</div>
+            <p class="intro-text" data-i18n="hero_intro">
                 Educational Technology student at Universitas Pendidikan Indonesia with a strong background in Software Engineering. I specialize in backend development, data engineering, and creating large-scale social media scraping pipelines. I enjoy solving complex API structures and turning messy data into structured insights.
             </p>
             <div style="margin-top: 20px;">
-                <a href="#projects" class="btn" style="padding: 12px 25px; font-size: 1.1em;">View My Work ↓</a>
+                <a href="#projects" class="btn" style="padding: 12px 25px; font-size: 1.1em;" data-i18n="hero_btn">View My Work ↓</a>
             </div>
         </div>
 
-        <!-- Featured Projects Section (The Portfolio Aspect) -->
-        <h2 id="projects" class="section-title">Featured Projects</h2>
+        <!-- Featured Projects Section -->
+        <h2 id="projects" class="section-title" data-i18n="projects_title">Featured Projects</h2>
         <div class="projects-grid">
             
             <!-- Project 1 -->
             <div class="project-card">
-                <div class="project-image">
+                <div class="project-image" data-i18n="img_placeholder_1">
                     
                 </div>
-                <h3 class="project-title">Mass Social Media Data Scraper</h3>
-                <p class="project-desc">
+                <h3 class="project-title" data-i18n="p1_title">Mass Social Media Data Scraper</h3>
+                <p class="project-desc" data-i18n="p1_desc">
                     Developed a robust pipeline to extract large-scale data from X (Twitter), Threads, and YouTube. Implemented rate-limit handling and account rotation to bypass blocks and collect high-volume structured data for analytics.
                 </p>
                 <div class="skills-container" style="margin-bottom: 20px;">
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">Python</span>
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">Apify</span>
                 </div>
+                <div class="project-links">
+                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Confidential / NDA</span>
+                </div>
             </div>
 
             <!-- Project 2 -->
             <div class="project-card">
-                <div class="project-image">
+                <div class="project-image" data-i18n="img_placeholder_2">
                     
                 </div>
-                <h3 class="project-title">IG Mobile API Reverse Engineering</h3>
-                <p class="project-desc">
+                <h3 class="project-title" data-i18n="p2_title">IG Mobile API Reverse Engineering</h3>
+                <p class="project-desc" data-i18n="p2_desc">
                     Successfully bypassed SSL pinning to reverse engineer the Instagram Mobile API. This allowed for highly scalable, stealthy account and keyword-based data collection directly from mobile endpoints.
                 </p>
                 <div class="skills-container" style="margin-bottom: 20px;">
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">Python</span>
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">API Security</span>
                 </div>
+                <div class="project-links">
+                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Confidential / NDA</span>
+                </div>
             </div>
 
             <!-- Project 3 -->
             <div class="project-card">
-                <div class="project-image">
+                <div class="project-image" data-i18n="img_placeholder_3">
                     
                 </div>
-                <h3 class="project-title">Si Iteung Payroll System Module</h3>
-                <p class="project-desc">
+                <h3 class="project-title" data-i18n="p3_title">Si Iteung Payroll System Module</h3>
+                <p class="project-desc" data-i18n="p3_desc">
                     Built and integrated internal application modules for "Si Iteung", focusing on Salary and Allowance History features. Utilized Python scripting for internal data processing to eliminate manual administrative work.
                 </p>
                 <div class="skills-container" style="margin-bottom: 20px;">
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">PHP / Laravel</span>
                     <span class="skill-tag" style="padding: 4px 10px; font-size: 0.85em;">MySQL</span>
                 </div>
-
+                <div class="project-links">
+                    <span class="confidential-tag" data-i18n="confidential_warning">🔒 Confidential / NDA</span>
+                </div>
             </div>
 
         </div>
 
         <!-- Skills Section -->
-        <h2 class="section-title">Tech Stack</h2>
+        <h2 class="section-title" data-i18n="skills_title">Tech Stack</h2>
         <div class="skills-container">
             <span class="skill-tag">HTML</span>
             <span class="skill-tag">PHP</span>
@@ -461,48 +564,48 @@
             <span class="skill-tag">Laravel</span>
             <span class="skill-tag">MySQL</span>
             <span class="skill-tag">MongoDB</span>
-            <span class="skill-tag">Data Scraping</span>
+            <span class="skill-tag" data-i18n="skill_scraping">Data Scraping</span>
             <span class="skill-tag">Reverse Engineering</span>
         </div>
 
         <!-- Experience Section -->
-        <h2 id="experience" class="section-title">Experience</h2>
+        <h2 id="experience" class="section-title" data-i18n="exp_title">Experience</h2>
         
         <div class="timeline-item">
             <div class="timeline-header">
-                <span class="timeline-title">Data Ingestion (Programmer Scrapper)</span>
-                <span class="timeline-date">2025 - Present</span>
+                <span class="timeline-title" data-i18n="exp1_role">Data Ingestion (Programmer Scrapper)</span>
+                <span class="timeline-date" data-i18n="exp1_date">2025 - Present</span>
             </div>
             <div class="timeline-subtitle">PT Kurasi Media | Jakarta, Indonesia</div>
             <ul>
-                <li>Engineered large-scale social media scraping pipelines (Instagram, X, Threads, YouTube).</li>
-                <li>Implemented SSL pinning bypass for mobile API data extraction.</li>
-                <li>Optimized multi-source scrapers using Apify and Nitter with advanced account rotation.</li>
+                <li data-i18n="exp1_task1">Engineered large-scale social media scraping pipelines (Instagram, X, Threads, YouTube).</li>
+                <li data-i18n="exp1_task2">Implemented SSL pinning bypass for mobile API data extraction.</li>
+                <li data-i18n="exp1_task3">Optimized multi-source scrapers using Apify and Nitter with advanced account rotation.</li>
             </ul>
         </div>
 
         <div class="timeline-item">
             <div class="timeline-header">
-                <span class="timeline-title">Programmer (PKL & Magang)</span>
+                <span class="timeline-title" data-i18n="exp2_role">Programmer (PKL & Magang)</span>
                 <span class="timeline-date">2023 - 2024</span>
             </div>
             <div class="timeline-subtitle">CV Kabayan Group | Bandung, Indonesia</div>
             <ul>
-                <li>Developed modules for the Si Iteung application (Salary and Allowance tracking).</li>
-                <li>Automated data filtering processes using Python scripts.</li>
+                <li data-i18n="exp2_task1">Developed modules for the Si Iteung application (Salary and Allowance tracking).</li>
+                <li data-i18n="exp2_task2">Automated data filtering processes using Python scripts.</li>
             </ul>
         </div>
 
         <!-- Education Section -->
-        <h2 class="section-title">Education</h2>
+        <h2 class="section-title" data-i18n="edu_title">Education</h2>
         
         <div class="timeline-item">
             <div class="timeline-header">
                 <span class="timeline-title">Universitas Pendidikan Indonesia (UPI)</span>
-                <span class="timeline-date">2024 - Present</span>
+                <span class="timeline-date" data-i18n="edu1_date">2024 - Present</span>
             </div>
-            <div class="timeline-subtitle">Educational Technology | Bandung, Indonesia</div>
-            <p style="font-size: 1.05em; line-height: 1.5;">Merging educational concepts with technological advancements to design systems and media that enhance learning.</p>
+            <div class="timeline-subtitle" data-i18n="edu1_major">Educational Technology | Bandung, Indonesia</div>
+            <p style="font-size: 1.05em; line-height: 1.5;" data-i18n="edu1_desc">Merging educational concepts with technological advancements to design systems and media that enhance learning.</p>
         </div>
         
         <div class="timeline-item">
@@ -510,16 +613,16 @@
                 <span class="timeline-title">SMK Negeri 1 Katapang</span>
                 <span class="timeline-date">2021 - 2024</span>
             </div>
-            <div class="timeline-subtitle">Software Engineering (RPL) | Katapang, Indonesia</div>
-            <p style="font-size: 1.05em; line-height: 1.5;">Built a strong fundamental base in programming, algorithms, and software development lifecycles.</p>
+            <div class="timeline-subtitle" data-i18n="edu2_major">Software Engineering (RPL) | Katapang, Indonesia</div>
+            <p style="font-size: 1.05em; line-height: 1.5;" data-i18n="edu2_desc">Built a strong fundamental base in programming, algorithms, and software development lifecycles.</p>
         </div>
 
     </div>
 
     <!-- Footer / Contact Section -->
     <footer id="contact" class="site-footer">
-        <div class="contact-large">Let's Work Together</div>
-        <p style="margin-bottom: 20px; font-size: 1.1em;">Currently open for freelance opportunities and collaborations.</p>
+        <div class="contact-large" data-i18n="footer_title">Let's Work Together</div>
+        <p style="margin-bottom: 20px; font-size: 1.1em;" data-i18n="footer_desc">Currently open for freelance opportunities and collaborations.</p>
         
         <div class="footer-links">
             <a href="mailto:adhikaramdanil5@gmail.com">✉️ adhikaramdanil5@gmail.com</a>
@@ -528,12 +631,147 @@
         </div>
         
         <div class="footer-links" style="margin-top: 10px;">
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
+            <a href="https://github.com/Yukodesuwwa">GitHub</a>
+            <a href="https://www.linkedin.com/in/adhika-ramdani">LinkedIn</a>
         </div>
         
-        <p class="copyright">&copy; 2026 Adhika Ramdani. Handcrafted with Code.</p>
+        <p class="copyright" data-i18n="footer_copyright">&copy; 2026 Adhika Ramdani. Handcrafted with Code.</p>
     </footer>
 
+    <!-- Script for Theme and Language Toggles -->
+    <script>
+        // --- 1. LANGUAGE TOGGLE LOGIC ---
+        const translations = {
+            en: {
+                nav_about: "About", nav_projects: "Projects", nav_experience: "Experience", nav_contact: "Contact",
+                hero_subtitle: "Software Engineer & Data Ingestion Spec.",
+                hero_intro: "Educational Technology student at Universitas Pendidikan Indonesia with a strong background in Software Engineering. I specialize in backend development, data engineering, and creating large-scale social media scraping pipelines. I enjoy solving complex API structures and turning messy data into structured insights.",
+                hero_btn: "View My Work ↓",
+                projects_title: "Featured Projects",
+                img_placeholder_1: "",
+                img_placeholder_2: "",
+                img_placeholder_3: "",
+                p1_title: "Mass Social Media Data Scraper",
+                p1_desc: "Developed a robust pipeline to extract large-scale data from X (Twitter), Threads, and YouTube. Implemented rate-limit handling and account rotation to bypass blocks and collect high-volume structured data for analytics.",
+                p2_title: "IG Mobile API Reverse Engineering",
+                p2_desc: "Successfully bypassed SSL pinning to reverse engineer the Instagram Mobile API. This allowed for highly scalable, stealthy account and keyword-based data collection directly from mobile endpoints.",
+                p3_title: "Si Iteung Payroll System Module",
+                p3_desc: "Built and integrated internal application modules for \"Si Iteung\", focusing on Salary and Allowance History features. Utilized Python scripting for internal data processing to eliminate manual administrative work.",
+                confidential_warning: "🔒 Confidential / NDA",
+                skills_title: "Tech Stack", skill_scraping: "Data Scraping",
+                exp_title: "Experience",
+                exp1_role: "Data Ingestion (Programmer Scrapper)", exp1_date: "2025 - Present",
+                exp1_task1: "Engineered large-scale social media scraping pipelines (Instagram, X, Threads, YouTube).",
+                exp1_task2: "Implemented SSL pinning bypass for mobile API data extraction.",
+                exp1_task3: "Optimized multi-source scrapers using Apify and Nitter with advanced account rotation.",
+                exp2_role: "Programmer (Intern)",
+                exp2_task1: "Developed modules for the Si Iteung application (Salary and Allowance tracking).",
+                exp2_task2: "Automated data filtering processes using Python scripts.",
+                edu_title: "Education",
+                edu1_date: "2024 - Present", edu1_major: "Educational Technology | Bandung, Indonesia",
+                edu1_desc: "Merging educational concepts with technological advancements to design systems and media that enhance learning.",
+                edu2_major: "Software Engineering (RPL) | Katapang, Indonesia",
+                edu2_desc: "Built a strong fundamental base in programming, algorithms, and software development lifecycles.",
+                footer_title: "Let's Work Together",
+                footer_desc: "Currently open for freelance opportunities and collaborations.",
+                footer_copyright: "© 2026 Adhika Ramdani. Handcrafted with Code."
+            },
+            id: {
+                nav_about: "Tentang", nav_projects: "Proyek", nav_experience: "Pengalaman", nav_contact: "Kontak",
+                hero_subtitle: "Software Engineer & Data Ingestion Spec.",
+                hero_intro: "Mahasiswa Teknologi Pendidikan di Universitas Pendidikan Indonesia dengan latar belakang kuat di bidang Rekayasa Perangkat Lunak. Saya memiliki spesialisasi dalam pengembangan backend, data engineering, dan pembuatan pipeline scraping media sosial skala besar. Saya menikmati memecahkan struktur API kompleks dan mengubah data acak menjadi wawasan terstruktur.",
+                hero_btn: "Lihat Karya Saya ↓",
+                projects_title: "Proyek Pilihan",
+                img_placeholder_1: "[Gambar Diagram Skema Scraping Pipa Data Media Sosial]",
+                img_placeholder_2: "[Gambar Sketsa Kode Reverse Engineering API Mobile]",
+                img_placeholder_3: "[Gambar Tampilan UI Modul Penggajian Si Iteung]",
+                p1_title: "Scraper Data Media Sosial Massal",
+                p1_desc: "Mengembangkan pipeline tangguh untuk mengekstrak data berskala besar dari X (Twitter), Threads, dan YouTube. Menerapkan penanganan batas permintaan (rate-limit) dan rotasi akun untuk menembus pemblokiran serta mengumpulkan data terstruktur bervolume tinggi untuk analitik.",
+                p2_title: "Reverse Engineering API Mobile Instagram",
+                p2_desc: "Berhasil menembus SSL pinning untuk membedah API Mobile Instagram. Memungkinkan pengumpulan data berbasis akun dan kata kunci yang sangat skalabel dan aman dari deteksi langsung melalui endpoint aplikasi mobile.",
+                p3_title: "Modul Sistem Penggajian Si Iteung",
+                p3_desc: "Membangun dan mengintegrasikan modul aplikasi internal untuk \"Si Iteung\", dengan fokus pada fitur Riwayat Gaji dan Tunjangan. Memanfaatkan skrip Python untuk pemrosesan data internal demi memangkas beban kerja administrasi manual.",
+                confidential_warning: "🔒 Bersifat Rahasia / NDA",
+                skills_title: "Teknologi", skill_scraping: "Scraping Data",
+                exp_title: "Pengalaman Kerja",
+                exp1_role: "Data Ingestion (Programmer Scrapper)", exp1_date: "2025 - Sekarang",
+                exp1_task1: "Merekayasa pipeline scraping media sosial skala besar (Instagram, X, Threads, YouTube).",
+                exp1_task2: "Mengimplementasikan bypass SSL pinning untuk ekstraksi data API mobile.",
+                exp1_task3: "Mengoptimalkan scraper multi-sumber menggunakan Apify dan Nitter dengan rotasi akun tingkat lanjut.",
+                exp2_role: "Programmer (PKL & Magang)",
+                exp2_task1: "Mengembangkan modul untuk aplikasi Si Iteung (pelacakan Gaji dan Tunjangan).",
+                exp2_task2: "Mengotomatiskan proses penyaringan data menggunakan skrip Python.",
+                edu_title: "Pendidikan",
+                edu1_date: "2024 - Sekarang", edu1_major: "Teknologi Pendidikan | Bandung, Indonesia",
+                edu1_desc: "Menggabungkan konsep kependidikan dengan perkembangan teknologi terkini untuk merancang sistem dan media yang meningkatkan proses pembelajaran.",
+                edu2_major: "Rekayasa Perangkat Lunak (RPL) | Katapang, Indonesia",
+                edu2_desc: "Membangun landasan fundamental yang kuat dalam pemrograman, algoritma, dan siklus hidup pengembangan perangkat lunak.",
+                footer_title: "Mari Bekerja Sama",
+                footer_desc: "Saat ini terbuka untuk peluang freelance dan kolaborasi proyek.",
+                footer_copyright: "© 2026 Adhika Ramdani. Dibuat manual dengan Kode."
+            }
+        };
+
+        const langToggleBtn = document.getElementById('lang-toggle');
+        
+        // Auto-detect language or get from local storage
+        let currentLang = localStorage.getItem('portfolio_lang');
+        if (!currentLang) {
+            const userLang = navigator.language || navigator.userLanguage;
+            currentLang = userLang.toLowerCase().includes('id') ? 'id' : 'en';
+        }
+
+        function applyLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            document.documentElement.lang = lang;
+            
+            // Membuat indikator bahasa lebih jelas menyorot bahasa yang sedang aktif
+            if (lang === 'en') {
+                langToggleBtn.innerHTML = '<strong>EN</strong> <span style="font-weight: normal; opacity: 0.4;">/ ID</span>';
+            } else {
+                langToggleBtn.innerHTML = '<span style="font-weight: normal; opacity: 0.4;">EN /</span> <strong>ID</strong>';
+            }
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'id' : 'en';
+            localStorage.setItem('portfolio_lang', currentLang);
+            applyLanguage(currentLang);
+        });
+
+        // Apply on initial load
+        applyLanguage(currentLang);
+
+        // --- 2. THEME TOGGLE LOGIC ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        // Default is light, check local storage
+        let currentTheme = localStorage.getItem('portfolio_theme') || 'light';
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggleBtn.textContent = '☀️';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeToggleBtn.textContent = '🌙';
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('portfolio_theme', currentTheme);
+            applyTheme(currentTheme);
+        });
+
+        // Apply on initial load
+        applyTheme(currentTheme);
+
+    </script>
 </body>
 </html>
